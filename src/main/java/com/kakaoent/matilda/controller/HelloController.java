@@ -19,7 +19,8 @@ public class HelloController {
     }
 
     @GetMapping("/api1")
-    public void api1(@RequestParam String txId) {
+    public String api1(@RequestParam String txId) {
+        return "your txId is : " + txId;
     }
 
     @GetMapping("/api2/api3")
