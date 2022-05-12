@@ -27,8 +27,8 @@ public class LoggingInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);
-        logger.debug("[RESPONSE] status: {}, response: {}", response.getStatus(), responseWrapper.getContentAsByteArray());
+        ContentCachingResponseWrapper cachingResponseWrapper = (ContentCachingResponseWrapper) response;
+        logger.debug("[RESPONSE] status: {}, response: {}", response.getStatus(), new String(cachingResponseWrapper.getContentAsByteArray()));
 
         String prevValue = ThreadLocalX.THREAD_LOCAL.get();
         ThreadLocalX.THREAD_LOCAL.set(prevValue + " | RESPONSE: " + response.getStatus());
