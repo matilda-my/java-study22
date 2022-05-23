@@ -1,5 +1,6 @@
-package com.kakaoent.matilda.controller;
+package com.kakaoent.matilda.config;
 
+import com.kakaoent.matilda.etc.ThreadLocalX;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;

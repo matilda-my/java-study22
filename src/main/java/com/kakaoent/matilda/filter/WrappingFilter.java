@@ -1,4 +1,4 @@
-package com.kakaoent.matilda.controller;
+package com.kakaoent.matilda.filter;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
