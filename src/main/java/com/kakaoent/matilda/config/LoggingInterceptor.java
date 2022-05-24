@@ -16,7 +16,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        logger.debug("[REQUEST] path: {}, HTTP method: {}, parameters: {}", request.getServletPath(), request.getMethod(),
+        logger.info("[REQUEST] path: {}, HTTP method: {}, parameters: {}", request.getServletPath(), request.getMethod(),
                 request.getParameterMap().entrySet().stream()
                         .map(e -> e.getKey() + ": " + String.join(", ", e.getValue()))
                         .collect(Collectors.joining("; ")));
@@ -29,7 +29,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         ContentCachingResponseWrapper cachingResponseWrapper = (ContentCachingResponseWrapper) response;
-        logger.debug("[RESPONSE] status: {}, response: {}", response.getStatus(), new String(cachingResponseWrapper.getContentAsByteArray()));
+        logger.info("[RESPONSE] status: {}, response: {}", response.getStatus(), new String(cachingResponseWrapper.getContentAsByteArray()));
 
         String prevValue = ThreadLocalX.THREAD_LOCAL.get();
         ThreadLocalX.THREAD_LOCAL.set(prevValue + " | RESPONSE: " + response.getStatus());
@@ -37,8 +37,20 @@ public class LoggingInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        logger.debug("I AM DONE: " + ThreadLocalX.THREAD_LOCAL.get());
-
+        logger.info("I AM DONE: " + ThreadLocalX.THREAD_LOCAL.get());
         ThreadLocalX.THREAD_LOCAL.remove();
+
+        logger.info("========================");
+        for (ThreadLocalX.MethodWithDepth d: ThreadLocalX.THREAD_LOCAL_METHOD.get()) {
+            Integer depth = d.getDepth();
+
+            String indent = "";
+            if (depth > 0) {
+                indent = String.format("%-" + depth + "s", "");
+            }
+
+            logger.info(indent + d.getMsg());
+        }
+        logger.info("========================");
     }
 }

@@ -1,7 +1,7 @@
 package com.kakaoent.matilda.controller;
 
-import com.kakaoent.matilda.service.Consumer;
-import com.kakaoent.matilda.service.Producer;
+import com.kakaoent.matilda.service.kafka.Consumer;
+import com.kakaoent.matilda.service.kafka.Producer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

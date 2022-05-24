@@ -1,4 +1,4 @@
-package com.kakaoent.matilda.service;
+package com.kakaoent.matilda.service.kafka;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
